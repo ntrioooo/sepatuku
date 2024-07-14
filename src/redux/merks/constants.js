@@ -1,0 +1,3 @@
+export const START_FETCHING_MERKS = 'redux/merks/START_FETCHING_MERKS';
+export const SUCCESS_FETCHING_MERKS = 'redux/merks/SUCCESS_FETCHING_MERKS';
+export const ERROR_FETCHING_MERKS = 'redux/merks/ERROR_FETCHING_MERKS';
