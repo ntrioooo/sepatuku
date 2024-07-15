@@ -2,8 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LayoutHome from '../LayoutHome';
 import NavBrand from '../NavBrand.jsx';
+import { useSelector, useDispatch } from 'react-redux';
+import { userLogout } from '../../redux/auth/actions.js';
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(userLogout());
+  };
   return (
     <nav className="bg-white w-full border-b border-gray-200">
       <LayoutHome>
@@ -48,6 +56,13 @@ export default function Navbar() {
                 Register
               </p>
             </Link>
+            {token && (
+              <button onClick={handleLogout}>
+                <p className="text-black font-medium rounded-lg text-sm px-2 py-2 text-center hover:text-green-500">
+                  Logout
+                </p>
+              </button>
+            )}
             <button
               data-collapse-toggle="navbar-sticky"
               type="button"

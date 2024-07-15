@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import GuardRoute from '../components/GuardRoute';
 // import GuestOnlyRoute from '../components/GuestOnlyRoute';
-import GuestOnlyRoute from '../components/GuestOnlyRoute'
+import GuestOnlyRoute from '../components/GuestOnlyRoute';
 import AdminRoute from '../components/AdminRoute';
 import HomePage from '../pages/Home';
 
@@ -10,6 +10,8 @@ import RegisterPage from '../pages/Register';
 import DashboardPage from '../pages/Dashboard';
 import MerksAdminPage from '../pages/MerksAdmin';
 import CreateMerkPage from '../pages/MerksAdmin/create';
+import EditMerkPage from '../pages/MerksAdmin/edit';
+import OrdersPage from '../pages/Orders';
 
 export function AppRoutes() {
   return (
@@ -55,6 +57,14 @@ export function AppRoutes() {
         }
       />
       <Route
+        path="/dashboard/merks/edit/:id"
+        element={
+          <AdminRoute roles={['admin']}>
+            <EditMerkPage />
+          </AdminRoute>
+        }
+      />
+      <Route
         path="/"
         element={
           <>
@@ -63,6 +73,7 @@ export function AppRoutes() {
         }
       >
         <Route path="/" element={<HomePage />} />
+        <Route path="/orders/:id" element={<OrdersPage />} />
       </Route>
     </Routes>
   );

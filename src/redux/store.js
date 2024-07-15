@@ -8,6 +8,7 @@ import {
 import { thunk } from 'redux-thunk';
 import authReducer from './auth/reducer';
 import merkReducer from './merks/reducer';
+import itemReducer from './items/reducer';
 
 const composerEnchancer =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -15,6 +16,7 @@ const composerEnchancer =
 const rootReducers = combineReducers({
   auth: authReducer,
   merks: merkReducer,
+  items: itemReducer,
 });
 
 const store = createStore(
