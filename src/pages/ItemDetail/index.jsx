@@ -19,28 +19,25 @@ export default function ItemDetail() {
   }, [dispatch, id]);
 
   const [items, setItems] = useState({
-    name: '',
-    price: 0,
+    itemId: '',
+    color: '',
     size: '',
     quantity: 0,
-    color: '',
   });
 
   const handleChange = (e) => {
     setItems({ ...items, [e.target.name]: e.target.value });
-    console.log(e.target.name);
-    console.log(e.target.value);
+    console.log(e.target.name, e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
-      id: data._id,
-      price: parseInt(data.price),
-      size: data.size,
+      itemId: data._id,
+      size: items.size,
       quantity: parseInt(items.quantity),
-      color: data.color,
+      color: items.color,
     };
 
     console.log('payload');

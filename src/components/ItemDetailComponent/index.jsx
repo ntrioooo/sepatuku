@@ -35,7 +35,7 @@ export default function ItemDetailComponent({
               id="countries"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-1"
               onChange={onChange}
-              name="quantity"
+              name="size"
             >
               <option>38</option>
               <option>39</option>
