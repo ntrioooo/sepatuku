@@ -40,7 +40,7 @@ export default function NikeBrand() {
                 />
               </a>
               <div className="px-3 pb-3">
-                <Link to={`/orders/${item._id}`}>
+                <Link to={`/items/${item._id}`}>
                   <h5 className="text-xl font-semibold tracking-tight text-gray-900 mb-2">
                     {item.name}
                   </h5>
@@ -50,7 +50,7 @@ export default function NikeBrand() {
                     {item.price}
                   </span>
                   <Button
-                    action={() => navigate(`/orders/${item._id}`)}
+                    action={() => navigate(`/items/${item._id}`)}
                     className="text-white bg-black hover:bg-gray-900 focus:ring-2 focus:outline-none focus:ring-gray-900 rounded-md text-lg p-1 flex w-full items-center justify-center mt-2"
                   >
                     Buy Now

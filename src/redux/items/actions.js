@@ -44,3 +44,22 @@ export const fetchItems = () => {
     }
   };
 };
+
+export const fetchItemsById = (id) => {
+  return async (dispatch) => {
+    dispatch(startFetchingItems());
+    try {
+      let res = await debounceFetchItems(`/items/${id}`);
+
+      console.log(res);
+
+      dispatch(
+        successFetchingItems({
+          items: res.data.data,
+        })
+      );
+    } catch (error) {
+      dispatch(errorFetchingItems());
+    }
+  };
+};

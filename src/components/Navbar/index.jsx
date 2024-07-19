@@ -46,17 +46,20 @@ export default function Navbar() {
             </svg>
           </div>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <Link to="/login">
-              <p className="text-black font-medium rounded-lg text-sm px-2 py-2 text-center hover:text-green-500">
-                Login
-              </p>
-            </Link>
-            <Link to="/register">
-              <p className="text-black font-medium rounded-lg text-sm px-2 py-2 text-center hover:text-green-500">
-                Register
-              </p>
-            </Link>
-            {token && (
+            {!token ? (
+              <>
+                <Link to="/login">
+                  <p className="text-black font-medium rounded-lg text-sm px-2 py-2 text-center hover:text-green-500">
+                    Login
+                  </p>
+                </Link>
+                <Link to="/register">
+                  <p className="text-black font-medium rounded-lg text-sm px-2 py-2 text-center hover:text-green-500">
+                    Register
+                  </p>
+                </Link>
+              </>
+            ) : (
               <button onClick={handleLogout}>
                 <p className="text-black font-medium rounded-lg text-sm px-2 py-2 text-center hover:text-green-500">
                   Logout

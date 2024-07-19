@@ -12,6 +12,7 @@ import MerksAdminPage from '../pages/MerksAdmin';
 import CreateMerkPage from '../pages/MerksAdmin/create';
 import EditMerkPage from '../pages/MerksAdmin/edit';
 import OrdersPage from '../pages/Orders';
+import ItemDetailPage from '../pages/ItemDetail';
 
 export function AppRoutes() {
   return (
@@ -73,6 +74,7 @@ export function AppRoutes() {
         }
       >
         <Route path="/" element={<HomePage />} />
+        <Route path="/items/:id" element={<ItemDetailPage />} />
         <Route path="/orders/:id" element={<OrdersPage />} />
       </Route>
     </Routes>
