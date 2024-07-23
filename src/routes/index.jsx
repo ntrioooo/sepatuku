@@ -14,6 +14,7 @@ import EditMerkPage from '../pages/MerksAdmin/edit';
 import OrdersPage from '../pages/Orders';
 import ItemDetailPage from '../pages/ItemDetail';
 import CartPage from '../pages/Cart';
+import Checkout from '../pages/Checkout';
 
 export function AppRoutes() {
   return (
@@ -77,7 +78,7 @@ export function AppRoutes() {
         <Route path="/" element={<HomePage />} />
         <Route path="/items/:id" element={<ItemDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/orders/:id" element={<OrdersPage />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Route>
     </Routes>
   );

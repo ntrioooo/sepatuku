@@ -12,8 +12,6 @@ export default function ItemDetail() {
   const { id } = useParams();
   const { data } = useSelector((state) => state.items);
 
-  console.log(data);
-
   useEffect(() => {
     dispatch(fetchItemsById(id));
   }, [dispatch, id]);

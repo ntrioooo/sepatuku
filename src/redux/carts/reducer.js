@@ -2,9 +2,12 @@ import {
   START_FETCHING_CARTS,
   SUCCESS_FETCHING_CARTS,
   ERROR_FETCHING_CARTS,
-  START_POST_CARTS,
-  SUCCESS_POST_CARTS,
-  ERROR_POST_CARTS,
+  START_UPDATE_CARTS,
+  SUCCESS_UPDATE_CARTS,
+  ERROR_UPDATE_CARTS,
+  ERROR_CHECK_CARTS,
+  START_CHECK_CARTS,
+  SUCCESS_CHECK_CARTS,
 } from './constants';
 
 const statusList = {
@@ -36,17 +39,33 @@ export default function reducer(state = initialState, action) {
         status: statusList.success,
         data: action.carts,
       };
-    case START_POST_CARTS:
+    case START_UPDATE_CARTS:
       return {
         ...state,
         status: statusList.process,
       };
-    case ERROR_POST_CARTS:
+    case ERROR_UPDATE_CARTS:
       return {
         ...state,
         status: statusList.error,
       };
-    case SUCCESS_POST_CARTS:
+    case SUCCESS_UPDATE_CARTS:
+      return {
+        ...state,
+        status: statusList.success,
+        data: action.carts,
+      };
+    case START_CHECK_CARTS:
+      return {
+        ...state,
+        status: statusList.process,
+      };
+    case ERROR_CHECK_CARTS:
+      return {
+        ...state,
+        status: statusList.error,
+      };
+    case SUCCESS_CHECK_CARTS:
       return {
         ...state,
         status: statusList.success,

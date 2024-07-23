@@ -2,17 +2,21 @@ import {
   START_FETCHING_CARTS,
   SUCCESS_FETCHING_CARTS,
   ERROR_FETCHING_CARTS,
-  ERROR_POST_CARTS,
-  START_POST_CARTS,
-  SUCCESS_POST_CARTS,
+  ERROR_UPDATE_CARTS,
+  START_UPDATE_CARTS,
+  SUCCESS_UPDATE_CARTS,
+  ERROR_CHECK_CARTS,
+  START_CHECK_CARTS,
+  SUCCESS_CHECK_CARTS,
 } from './constants';
 
-import { getData } from '../../utils/fetch';
-import { postData } from '../../utils/fetch';
+import { getData, putData } from '../../utils/fetch';
 
 import debounce from 'debounce-promise';
 
-let debounceFetchCarts = debounce(getData, 1000);
+let debounceFetchCarts = debounce(getData, 0);
+
+// FETCH
 
 export const startFetchingCarts = () => {
   return {
@@ -33,22 +37,45 @@ export const errorFetchingCarts = () => {
   };
 };
 
-export const startPostCarts = () => {
+// UPDATE
+
+export const startUpdateCarts = () => {
   return {
-    type: START_POST_CARTS,
+    type: START_UPDATE_CARTS,
   };
 };
 
-export const successPostCarts = ({ carts }) => {
+export const successUpdateCarts = ({ carts }) => {
   return {
-    type: SUCCESS_POST_CARTS,
+    type: SUCCESS_UPDATE_CARTS,
     carts,
   };
 };
 
-export const errorPostCarts = () => {
+export const errorUpdateCarts = () => {
   return {
-    type: ERROR_FETCHING_CARTS,
+    type: ERROR_UPDATE_CARTS,
+  };
+};
+
+// CHECK
+
+export const startCheckCarts = () => {
+  return {
+    type: START_CHECK_CARTS,
+  };
+};
+
+export const successCheckCarts = ({ carts }) => {
+  return {
+    type: SUCCESS_CHECK_CARTS,
+    carts,
+  };
+};
+
+export const errorCheckCarts = () => {
+  return {
+    type: ERROR_CHECK_CARTS,
   };
 };
 
@@ -69,24 +96,37 @@ export const fetchCarts = () => {
   };
 };
 
-export const postCarts = (item) => {
-  return {
-    type: START_POST_CARTS,
-    item,
+export const updateCarts = (item) => {
+  return async (dispatch) => {
+    dispatch(startUpdateCarts());
+    try {
+      let res = await putData(`/carts/${item.id}`, item);
+      dispatch(
+        successUpdateCarts({
+          carts: res.data.data,
+        })
+      );
+    } catch (error) {
+      console.error('Error updating cart:', error);
+      dispatch(errorUpdateCarts());
+    }
   };
 };
 
-// export const postCarts = () => {
-// //   return async (dispatch) => {
-// //     const res = await postData('/carts', {});
-// //     try {
-// //       dispatch(
-// //         successFetchingCarts({
-// //           carts: res.data.data,
-// //         })
-// //       );
-// //     } catch (error) {
-// //       dispatch(errorFetchingCarts());
-// //     }
-// //   };
-// // };
+export const checkCarts = (item) => {
+  return async (dispatch) => {
+    dispatch(startCheckCarts());
+    try {
+      let res = await putData(`/carts/updateChecked/${item.id}`, item);
+
+      dispatch(
+        successCheckCarts({
+          carts: res.data.data,
+        })
+      );
+    } catch (error) {
+      console.error('Error updating cart:', error);
+      dispatch(errorCheckCarts());
+    }
+  };
+};
