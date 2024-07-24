@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LayoutHome from '../LayoutHome';
 import { useSelector, useDispatch } from 'react-redux';
 import { formatIDR } from '../../utils/formatIDR';
 import { fetchCarts } from '../../redux/carts/actions';
+import { postData } from '../../utils/fetch';
 import ImageSamba from '../../assets/images/samba.png';
 import Button from '../Button';
 
@@ -10,7 +11,7 @@ export default function CheckoutComponent() {
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state.carts.data);
 
-  // console.log(items);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCarts());
@@ -18,13 +19,42 @@ export default function CheckoutComponent() {
 
   const selectedItems = items?.filter((item) => item.checked) || [];
 
+  // console.log(selectedItems);
+
   const getTotalPrice = () => {
     return selectedItems.reduce((total, item) => {
       return total + item.itemId.price * item.quantity;
     }, 0);
   };
 
-  console.log(selectedItems);
+  const handleCreateCheckout = async () => {
+    try {
+      const res = await postData(`/payments`, {
+        items: selectedItems.map((item) => ({
+          itemId: item.itemId._id,
+          quantity: item.quantity,
+          price: item.itemId.price,
+          name: item.itemId.name,
+          color: item.color,
+          size: item.size,
+        })),
+        totalAmount: getTotalPrice(),
+      });
+      console.log(res);
+      const { token } = res.data;
+
+      const urlToken = 'https://app.sandbox.midtrans.com/snap/v4/redirection';
+
+      window.open(`${urlToken}/${token}`, '_blank', 'noreferrer');
+
+      // navigate(
+      //   `/https://app.sandbox.midtrans.com/snap/v4/redirection/${token}`
+      // );
+    } catch (error) {
+      console.error('Error creating order:', error);
+    }
+  };
+
   return (
     <LayoutHome>
       <section className="bg-white py-8 antialiased md:py-16">
@@ -138,36 +168,15 @@ export default function CheckoutComponent() {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="mt-6 mx-auto w-full">
-            <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm md:p-6">
-              <h2 className="text-lg font-semibold text-gray-900 sm:text-base">
-                Metode Pembayaran
-              </h2>
-              <div className="border-b border-dashed">
-                <input
-                  type="radio"
-                  id="hosting-small"
-                  name="hosting"
-                  value="hosting-small"
-                  className="hidden peer"
-                  required
-                />
-                <label
-                  htmlFor="hosting-small"
-                  className="inline-flex px-3 py-2 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer mt-2  peer-checked:border-red-700 peer-checked:text-red-700 mb-3"
-                >
-                  <div className="block">
-                    <div className="w-full text-lg font-semibold">QRIS</div>
-                  </div>
-                </label>
-              </div>
               <div className="mt-6 flex justify-end">
                 <div className="text-right">
-                  <Button className="text-md text-white bg-black hover:bg-gray-800 px-5 py-3" >
-                    Buat Pesanan
+                  <Button
+                    className="text-md text-white bg-black hover:bg-gray-800 px-5 py-3"
+                    action={handleCreateCheckout}
+                    disabled={loading}
+                    loading={loading}
+                  >
+                    {loading ? 'Proccessing' : 'Buat Pesanan'}
                   </Button>
                 </div>
               </div>

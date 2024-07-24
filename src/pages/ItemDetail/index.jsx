@@ -46,7 +46,7 @@ export default function ItemDetail() {
 
     if (res?.data?.data) {
       alert('Berhasil menambahkan item ke keranjang');
-      navigate('/carts');
+      navigate('/cart');
     } else {
       alert('Gagal menambahkan item ke keranjang');
     }
